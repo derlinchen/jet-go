@@ -2,12 +2,13 @@ package dao
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"jet/bean"
 	"jet/bean/basedic"
 	"jet/db"
 	"log"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func SaveBaseDic(ctx *gin.Context, tx *gorm.DB) error {
@@ -25,31 +26,31 @@ func SaveBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 	return nil
 }
 
-func GetBaseDic(ctx *gin.Context) (error, []*basedic.BaseDicVo) {
+func GetBaseDic(ctx *gin.Context) ([]*basedic.BaseDicVo, error) {
 	var result []*basedic.BaseDicVo
 	var id = ctx.Query("Id")
 	err := db.Link.Where("id=?", id).Find(&result).Error
-	return err, result
+	return result, err
 }
 
-func SearchBaseDic(ctx *gin.Context) (error, basedic.PageInfo) {
+func SearchBaseDic(ctx *gin.Context) (basedic.PageInfo, error) {
 	var result = basedic.PageInfo{}
 	var lists []*basedic.BaseDicVo
 	pageSearch := bean.PageSearch{}
 	err := ctx.ShouldBind(&pageSearch)
 	if err != nil {
 		log.Fatal(err)
-		return err, result
+		return result, err
 	}
 	pageNum := pageSearch.PageNum
 	if pageNum < 0 {
 		if pageNum < 0 {
-			return errors.New("当前页不能小于0"), result
+			return result, errors.New("当前页不能小于0")
 		}
 	}
 	pageSize := pageSearch.PageSize
 	if pageSize < 0 {
-		return errors.New("每页条数不能小于0"), result
+		return result, errors.New("每页条数不能小于0")
 	}
 
 	id := pageSearch.Item["Id"]
@@ -67,20 +68,20 @@ func SearchBaseDic(ctx *gin.Context) (error, basedic.PageInfo) {
 	err = link.Model(&lists).Count(&total).Error
 	if err != nil {
 		log.Fatal(err)
-		return err, result
+		return result, err
 	}
 
 	err = link.Scopes(db.Paginate(pageNum, pageSize)).Find(&lists).Error
 	if err != nil {
 		log.Fatal(err)
-		return err, result
+		return result, err
 	}
 	result.PageSize = pageSearch.PageSize
 	result.PageNum = pageSearch.PageNum
 	result.Total = total
 	result.PageCount = db.CalcPageCount(total, pageSize)
 	result.Lists = lists
-	return err, result
+	return result, err
 }
 
 func DeleteBaseDic(ctx *gin.Context, tx *gorm.DB) error {

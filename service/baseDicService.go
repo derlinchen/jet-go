@@ -1,10 +1,11 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
 	"jet/bean"
 	"jet/dao"
 	"jet/db"
+
+	"github.com/gin-gonic/gin"
 )
 
 func SaveBaseDic(ctx *gin.Context) {
@@ -23,7 +24,7 @@ func SaveBaseDic(ctx *gin.Context) {
 }
 
 func GetBaseDic(ctx *gin.Context) {
-	err, result := dao.GetBaseDic(ctx)
+	result, err := dao.GetBaseDic(ctx)
 	if err == nil {
 		bean.NewResult(ctx).Success(result)
 	} else {
@@ -32,7 +33,7 @@ func GetBaseDic(ctx *gin.Context) {
 }
 
 func SearchBaseDic(ctx *gin.Context) {
-	err, result := dao.SearchBaseDic(ctx)
+	result, err := dao.SearchBaseDic(ctx)
 	if err == nil {
 		bean.NewResult(ctx).Success(result)
 	} else {
