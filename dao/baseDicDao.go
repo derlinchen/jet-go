@@ -44,10 +44,9 @@ func SearchBaseDic(ctx *gin.Context) (basedic.PageInfo, error) {
 	}
 	pageNum := pageSearch.PageNum
 	if pageNum < 0 {
-		if pageNum < 0 {
-			return result, errors.New("当前页不能小于0")
-		}
+		return result, errors.New("当前页不能小于0")
 	}
+
 	pageSize := pageSearch.PageSize
 	if pageSize < 0 {
 		return result, errors.New("每页条数不能小于0")
