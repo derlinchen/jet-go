@@ -1,0 +1,5 @@
+package bean
+
+const (
+	COLON = ":"
+)

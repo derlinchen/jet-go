@@ -1,0 +1,12 @@
+Server:
+  Port: 8080
+Database:
+  UserName: root
+  Password: derlin2008
+  DriverName: mysql
+  DBName: jet
+  Charset: utf8
+  Local: Local
+  Domain: localhost
+  Port: 3306
+  ParseTime: true
