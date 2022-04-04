@@ -103,11 +103,8 @@ func UpdateBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 		return err
 	}
 
-	// 执行sql
-	exec := tx.Debug().Exec("update base_dic set name = ? where id = ?", baseDic.Name, baseDic.Id)
-	// sql执行存在问题，则进行事务回滚
-	if exec.Error != nil {
-		// 事务回滚
+	err = tx.Debug().Save(&baseDic).Error
+	if err != nil {
 		tx.Rollback()
 		return errors.New("更新失败")
 	}
