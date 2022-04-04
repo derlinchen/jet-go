@@ -1,8 +1,8 @@
 package basedic
 
 type BaseDicVo struct {
-	Id   string `db:"id", json:"Id"`
-	Name string `db:"name", json:"Name"`
+	Id   string
+	Name string
 }
 
 func (BaseDicVo) TableName() string {
