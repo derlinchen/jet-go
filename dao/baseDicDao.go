@@ -52,13 +52,14 @@ func SearchBaseDic(ctx *gin.Context) (basedic.PageInfo, error) {
 		return result, errors.New("每页条数不能小于0")
 	}
 
-	id := pageSearch.Item["Id"]
-	name := pageSearch.Item["Name"]
 	link := db.Link
+
+	id := pageSearch.Item["Id"]
 	if id != nil && id != "" {
 		link = link.Where("id = ?", id)
 	}
 
+	name := pageSearch.Item["Name"]
 	if name != nil && name != "" {
 		link = link.Where("name = ?", name)
 	}
