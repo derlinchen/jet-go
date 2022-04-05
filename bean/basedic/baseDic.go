@@ -8,7 +8,7 @@ type BaseDic struct {
 }
 
 func NewBaseDic() BaseDic {
-	snow := utils.SnowFlake{}
+	snow, _ := utils.NewSnowFlake()
 	return BaseDic{
 		Id: snow.Generate(),
 	}
