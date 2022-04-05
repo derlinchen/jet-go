@@ -12,7 +12,7 @@ import (
 )
 
 func SaveBaseDic(ctx *gin.Context, tx *gorm.DB) error {
-	var baseDic basedic.BaseDic
+	var baseDic = basedic.NewBaseDic()
 	err := ctx.ShouldBind(&baseDic)
 	if err != nil {
 		return err
@@ -96,7 +96,7 @@ func DeleteBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 
 func UpdateBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 	// 定义接收变量
-	var baseDic basedic.BaseDic
+	var baseDic = basedic.NewBaseDic()
 	// 对变量进行绑定
 	err := ctx.ShouldBind(&baseDic)
 	if err != nil {
