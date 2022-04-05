@@ -8,7 +8,7 @@ type BaseDicVo struct {
 }
 
 func NewBaseDicVo() BaseDicVo {
-	snow := utils.SnowFlake{}
+	snow, _ := utils.NewSnowFlake()
 	return BaseDicVo{
 		Id: snow.Generate(),
 	}

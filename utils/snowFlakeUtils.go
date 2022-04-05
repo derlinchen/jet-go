@@ -28,15 +28,15 @@ type SnowFlake struct {
 	sequence  int64
 }
 
-func NewSnowflake(workerid int64) (*SnowFlake, error) {
+func NewSnowFlake() (*SnowFlake, error) {
 	fmt.Println("初始化")
-
+	workerid := ConvertMacToInt() % 16
 	if workerid < 0 || workerid > workeridMax {
 		return nil, errors.New("worker id must be between 0 and 1023")
 	}
 	return &SnowFlake{
 		timestamp: 0,
-		workerId:  workerid,
+		workerId:  workerid + 1,
 		sequence:  0,
 	}, nil
 }
@@ -59,29 +59,4 @@ func (s *SnowFlake) Generate() string {
 	r := int64((now-0)<<timestampShift | (s.workerId << workIdShift) | (s.sequence))
 	s.Unlock()
 	return strconv.FormatInt(r, 10)
-}
-
-func main() {
-
-	snow := SnowFlake{}
-	//snow2 , _ := NewSnowflake(0)
-	//fmt.Printf("%p\t%p\n" , &snow , &*snow2)
-	count := 100 * 100 * 100 * 100 // * 100
-	start := time.Now().UnixNano() / 1000000
-	for i := 0; i < count; i++ {
-		id := snow.Generate()
-		fmt.Println(id)
-		/*
-			id2 := snow2.Generate()
-			if id !=id2 {
-			//	fmt.Println(id , id2 )
-			}
-		*/
-	}
-	end := time.Now().UnixNano() / 1000000
-	takes := (int)(end - start)
-	fmt.Println("运行", count, "时间", end-start)
-
-	fmt.Println("运行速度", (uint64)(count/takes))
-
 }
