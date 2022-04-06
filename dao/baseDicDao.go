@@ -17,8 +17,8 @@ func SaveBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 	if err != nil {
 		return err
 	}
-
-	exec := tx.Save(&baseDic)
+	var baseDicItem = []basedic.BaseDic{baseDic}
+	exec := tx.Save(&baseDicItem)
 	if exec.Error != nil {
 		tx.Rollback()
 		return errors.New("保存失败")
