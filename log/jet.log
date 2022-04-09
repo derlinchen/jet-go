@@ -1,0 +1,19 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /wms/baseDic/saveBaseDic  --> jet/controller.SaveBaseDic (4 handlers)
+[GIN-debug] GET    /wms/baseDic/getBaseDic   --> jet/controller.GetBaseDic (4 handlers)
+[GIN-debug] POST   /wms/baseDic/searchBaseDic --> jet/controller.SearchBaseDic (4 handlers)
+[GIN-debug] DELETE /wms/baseDic/deleteBaseDic --> jet/controller.DeleteBaseDic (4 handlers)
+[GIN-debug] POST   /wms/baseDic/updateBaseDic --> jet/controller.UpdateBaseDic (4 handlers)
+[GIN-debug] POST   /wms/baseLocation/saveBaseLocation --> jet/controller.SaveBaseLocation (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8081
+
+2022/04/09 22:32:08 E:/Source/Go/jet/dao/baseDicDao.go:32
+[2.989ms] [rows:1] SELECT * FROM `base_dic` WHERE id='6917055253992439808'
+[GIN] 2022/04/09 - 22:32:08 | 200 |       4.982ms |             ::1 | GET      "/wms/baseDic/getBaseDic?Id=6917055253992439808"
