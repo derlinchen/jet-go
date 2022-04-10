@@ -16,8 +16,8 @@ func SetupRouter() *gin.Engine {
 
 	router.NoRoute(NoFound)
 	router.NoMethod(NoFound)
-	router.Use(Logger)
 	router.Use(Recover)
+	router.Use(Logger)
 	baseDic := router.Group("/wms/baseDic")
 	{
 		baseDic.POST("/saveBaseDic", controller.SaveBaseDic)
