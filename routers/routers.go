@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"io"
 	"jet/bean"
 	"jet/controller"
 	"log"
@@ -17,6 +16,7 @@ func SetupRouter() *gin.Engine {
 
 	router.NoRoute(NoFound)
 	router.NoMethod(NoFound)
+	router.Use(Logger)
 	router.Use(Recover)
 	baseDic := router.Group("/wms/baseDic")
 	{
@@ -46,8 +46,11 @@ func Recover(c *gin.Context) {
 			bean.NewResult(c).Error("500", "服务器内部错误")
 		}
 	}()
-	c.Next()
 
+	c.Next()
+}
+
+func Logger(c *gin.Context) {
 	f, err := os.OpenFile("log/jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		_, err := os.Stat("log/")
@@ -57,6 +60,8 @@ func Recover(c *gin.Context) {
 		os.Create("log/jet.log")
 	}
 	log.SetOutput(f)
-
-	gin.DefaultWriter = io.MultiWriter(f)
+	uri := c.Request.RequestURI
+	method := c.Request.Method
+	log.Printf("请求:%s \t%s", method, uri)
+	c.Next()
 }

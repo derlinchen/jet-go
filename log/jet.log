@@ -1,19 +1,10 @@
-[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
-
-[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
- - using env:	export GIN_MODE=release
- - using code:	gin.SetMode(gin.ReleaseMode)
-
-[GIN-debug] POST   /wms/baseDic/saveBaseDic  --> jet/controller.SaveBaseDic (4 handlers)
-[GIN-debug] GET    /wms/baseDic/getBaseDic   --> jet/controller.GetBaseDic (4 handlers)
-[GIN-debug] POST   /wms/baseDic/searchBaseDic --> jet/controller.SearchBaseDic (4 handlers)
-[GIN-debug] DELETE /wms/baseDic/deleteBaseDic --> jet/controller.DeleteBaseDic (4 handlers)
-[GIN-debug] POST   /wms/baseDic/updateBaseDic --> jet/controller.UpdateBaseDic (4 handlers)
-[GIN-debug] POST   /wms/baseLocation/saveBaseLocation --> jet/controller.SaveBaseLocation (4 handlers)
-[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
-Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
-[GIN-debug] Listening and serving HTTP on :8081
-
-2022/04/09 22:32:08 E:/Source/Go/jet/dao/baseDicDao.go:32
-[2.989ms] [rows:1] SELECT * FROM `base_dic` WHERE id='6917055253992439808'
-[GIN] 2022/04/09 - 22:32:08 | 200 |       4.982ms |             ::1 | GET      "/wms/baseDic/getBaseDic?Id=6917055253992439808"
+2022/04/10 09:13:01 请求URI/wms/baseDic/getBaseDic?Id=6917055253992439808
+2022/04/10 09:13:01 执行时间:0毫秒,执行sql:SELECT * FROM `base_dic` WHERE id='6917055253992439808'
+2022/04/10 09:13:36 请求URI:/wms/baseDic/getBaseDic?Id=6917055253992439808
+2022/04/10 09:13:36 执行时间:1毫秒,执行sql:SELECT * FROM `base_dic` WHERE id='6917055253992439808'
+2022/04/10 09:15:45 请求URI:/wms/baseDic/getBaseDic?Id=6917055253992439808,请求方法：GET
+2022/04/10 09:15:45 执行时间:0毫秒,执行sql:SELECT * FROM `base_dic` WHERE id='6917055253992439808'
+2022/04/10 09:16:55 请求:GET 	|请求方法：/wms/baseDic/getBaseDic?Id=6917055253992439808
+2022/04/10 09:16:55 执行时间:0毫秒,执行sql:SELECT * FROM `base_dic` WHERE id='6917055253992439808'
+2022/04/10 09:17:37 请求:GET 	/wms/baseDic/getBaseDic?Id=6917055253992439808
+2022/04/10 09:17:37 执行时间:3毫秒,执行sql:SELECT * FROM `base_dic` WHERE id='6917055253992439808'

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io"
 	"jet/bean"
 	"jet/config"
 	"jet/db"
@@ -9,23 +8,9 @@ import (
 	"jet/routers"
 	"log"
 	"os"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	f, err := os.OpenFile("log/jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		_, err := os.Stat("log/")
-		if os.IsNotExist(err) {
-			os.MkdirAll("log/", os.ModePerm)
-		}
-		os.Create("log/jet.log")
-	}
-	log.SetOutput(f)
-
-	gin.DefaultWriter = io.MultiWriter(f)
-
 	r := routers.SetupRouter()
 	if err := r.Run(bean.COLON + global.ServerSetting.Port); err != nil {
 		log.Fatalf("startup service failed, err:%v\n", err)
