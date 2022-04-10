@@ -43,7 +43,6 @@ var _ gorm.Plugin = &TracePlugin{}
 
 func before(db *gorm.DB) {
 	db.InstanceSet(startTime, time.Now())
-	return
 }
 
 func after(db *gorm.DB) {
@@ -57,8 +56,7 @@ func after(db *gorm.DB) {
 		return
 	}
 
-	time.Since(ts).Seconds()
+	excuteTime := time.Since(ts).Milliseconds()
 	sql := db.Dialector.Explain(db.Statement.SQL.String(), db.Statement.Vars...)
-	log.Println(sql)
-	return
+	log.Print("执行时间:", excuteTime, "毫秒,", "执行sql:", sql)
 }

@@ -3,14 +3,11 @@ package db
 import (
 	"jet/config"
 	"jet/global"
-	"log"
-	"os"
 	"strconv"
 	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 var (
@@ -20,19 +17,7 @@ var (
 func SetupDBLink() error {
 	var err error
 
-	f, _ := os.OpenFile("log/jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-
-	dbLogger := logger.New(
-		log.New(f, "\r\n", log.LstdFlags), // io writer
-		logger.Config{
-			SlowThreshold:             time.Second, // Slow SQL threshold
-			LogLevel:                  logger.Info, // Log level
-			IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
-			Colorful:                  false,       // Disable color
-		},
-	)
-
-	Link, err = gorm.Open(mysql.Open(global.DatabaseSetting.DataSourceName), &gorm.Config{Logger: dbLogger})
+	Link, err = gorm.Open(mysql.Open(global.DatabaseSetting.DataSourceName), &gorm.Config{})
 
 	if err != nil {
 		return err

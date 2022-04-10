@@ -22,8 +22,10 @@ func main() {
 		}
 		os.Create("log/jet.log")
 	}
+	log.SetOutput(f)
 
 	gin.DefaultWriter = io.MultiWriter(f)
+
 	r := routers.SetupRouter()
 	if err := r.Run(bean.COLON + global.ServerSetting.Port); err != nil {
 		log.Fatalf("startup service failed, err:%v\n", err)
