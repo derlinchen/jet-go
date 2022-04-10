@@ -1,6 +1,7 @@
 package db
 
 import (
+	"jet/config"
 	"jet/global"
 	"log"
 	"os"
@@ -37,7 +38,7 @@ func SetupDBLink() error {
 		return err
 	}
 
-	sqlDB, err := Link.DB()
+	sqlDB, _ := Link.DB()
 
 	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
 	sqlDB.SetMaxIdleConns(10)
@@ -45,7 +46,7 @@ func SetupDBLink() error {
 	sqlDB.SetMaxOpenConns(30)
 	// SetConnMaxLifetime 设置了连接可复用的最大时间
 	sqlDB.SetConnMaxLifetime(time.Hour)
-
+	Link.Use(&config.TracePlugin{})
 	return nil
 }
 
