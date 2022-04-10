@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"encoding/json"
 	"jet/bean"
 	"jet/controller"
 	"log"
@@ -68,9 +69,13 @@ func Logger(c *gin.Context) {
 
 	contentType := c.ContentType()
 	if binding.MIMEJSON == contentType {
-		json := make(map[string]interface{})
-		c.ShouldBindBodyWith(&json, binding.JSON)
-		log.Printf("请求参数:%s", json)
+		paramMap := make(map[string]interface{})
+		c.ShouldBindBodyWith(&paramMap, binding.JSON)
+		paramJson, err := json.Marshal(paramMap)
+		if err == nil {
+			log.Printf("请求参数:%s", paramJson)
+		}
+
 	}
 
 	c.Next()
