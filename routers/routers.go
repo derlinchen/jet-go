@@ -8,6 +8,7 @@ import (
 	"runtime/debug"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // SetupRouter 配置路由信息
@@ -64,5 +65,13 @@ func Logger(c *gin.Context) {
 	uri := c.Request.RequestURI
 	method := c.Request.Method
 	log.Printf("请求:%s \t%s", method, uri)
+
+	contentType := c.ContentType()
+	if binding.MIMEJSON == contentType {
+		json := make(map[string]interface{})
+		c.ShouldBindBodyWith(&json, binding.JSON)
+		log.Printf("请求参数:%s", json)
+	}
+
 	c.Next()
 }

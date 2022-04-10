@@ -8,12 +8,13 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"gorm.io/gorm"
 )
 
 func SaveBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 	var baseDic = basedic.NewBaseDic()
-	err := ctx.ShouldBind(&baseDic)
+	err := ctx.ShouldBindBodyWith(&baseDic, binding.JSON)
 	if err != nil {
 		return err
 	}
@@ -37,7 +38,7 @@ func SearchBaseDic(ctx *gin.Context) (basedic.PageInfo, error) {
 	var result = basedic.PageInfo{}
 	var lists []*basedic.BaseDicVo
 	pageSearch := bean.PageSearch{}
-	err := ctx.ShouldBind(&pageSearch)
+	err := ctx.ShouldBindBodyWith(&pageSearch, binding.JSON)
 	if err != nil {
 		log.Fatal(err)
 		return result, err
@@ -98,7 +99,7 @@ func UpdateBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 	// 定义接收变量
 	var baseDic = basedic.NewBaseDic()
 	// 对变量进行绑定
-	err := ctx.ShouldBind(&baseDic)
+	err := ctx.ShouldBindBodyWith(&baseDic, binding.JSON)
 	if err != nil {
 		return err
 	}
