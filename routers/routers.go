@@ -60,6 +60,7 @@ func Logger(c *gin.Context) {
 		os.Create("log/jet.log")
 	}
 	log.SetOutput(f)
+	log.SetFlags(log.Ldate | log.Lmicroseconds | log.Lshortfile)
 	uri := c.Request.RequestURI
 	method := c.Request.Method
 	log.Printf("请求:%s \t%s", method, uri)
