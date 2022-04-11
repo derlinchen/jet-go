@@ -70,13 +70,14 @@ func createLogFile(createFile func()) {
 }
 
 func createFile() {
-	f, err := os.OpenFile("log/jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logdir := "log/" + time.Now().Format("20060102") + "/"
+	f, err := os.OpenFile(logdir+"jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		_, err := os.Stat("log/")
+		_, err := os.Stat(logdir)
 		if os.IsNotExist(err) {
-			os.MkdirAll("log/", os.ModePerm)
+			os.MkdirAll(logdir, os.ModePerm)
 		}
-		os.Create("log/jet.log")
+		f, _ = os.Create(logdir + "jet.log")
 	}
 	log.SetOutput(f)
 	log.SetFlags(log.Ldate | log.Lmicroseconds | log.Lshortfile)
