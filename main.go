@@ -12,7 +12,6 @@ import (
 )
 
 func main() {
-	createLogFile(createFile)
 	r := routers.SetupRouter()
 	if err := r.Run(bean.COLON + global.ServerSetting.Port); err != nil {
 		log.Fatalf("startup service failed, err:%v\n", err)
@@ -20,6 +19,9 @@ func main() {
 }
 
 func init() {
+	// 创建日志文件
+	createLogFile(createFile)
+
 	// 加载配置文件
 	err := setupSetting()
 	if err != nil {
