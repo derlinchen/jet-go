@@ -8,9 +8,11 @@ import (
 	"jet/routers"
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
+	createLogFile(createFile)
 	r := routers.SetupRouter()
 	if err := r.Run(bean.COLON + global.ServerSetting.Port); err != nil {
 		log.Fatalf("startup service failed, err:%v\n", err)
@@ -52,4 +54,30 @@ func setupSetting() error {
 		return err
 	}
 	return nil
+}
+
+func createLogFile(createFile func()) {
+	go func() {
+		for {
+			createFile()
+			now := time.Now()
+			next := now.Add(time.Hour * 24)
+			next = time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location())
+			t := time.NewTimer(next.Sub(now))
+			<-t.C
+		}
+	}()
+}
+
+func createFile() {
+	f, err := os.OpenFile("log/jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		_, err := os.Stat("log/")
+		if os.IsNotExist(err) {
+			os.MkdirAll("log/", os.ModePerm)
+		}
+		os.Create("log/jet.log")
+	}
+	log.SetOutput(f)
+	log.SetFlags(log.Ldate | log.Lmicroseconds | log.Lshortfile)
 }

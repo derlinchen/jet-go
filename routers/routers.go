@@ -5,7 +5,6 @@ import (
 	"jet/bean"
 	"jet/controller"
 	"log"
-	"os"
 	"runtime/debug"
 
 	"github.com/gin-gonic/gin"
@@ -53,16 +52,6 @@ func Recover(c *gin.Context) {
 }
 
 func Logger(c *gin.Context) {
-	f, err := os.OpenFile("log/jet.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		_, err := os.Stat("log/")
-		if os.IsNotExist(err) {
-			os.MkdirAll("log/", os.ModePerm)
-		}
-		os.Create("log/jet.log")
-	}
-	log.SetOutput(f)
-	log.SetFlags(log.Ldate | log.Lmicroseconds | log.Lshortfile)
 	uri := c.Request.RequestURI
 	method := c.Request.Method
 	log.Printf("请求:%s \t%s", method, uri)
@@ -77,6 +66,5 @@ func Logger(c *gin.Context) {
 		}
 
 	}
-
 	c.Next()
 }
