@@ -6,6 +6,7 @@ import (
 	"jet/controller"
 	"log"
 	"runtime/debug"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -52,9 +53,10 @@ func Recover(c *gin.Context) {
 }
 
 func Logger(c *gin.Context) {
+	start := time.Now()
 	uri := c.Request.RequestURI
 	method := c.Request.Method
-	log.Printf("请求:%s \t%s", method, uri)
+	log.Printf("请求开始:%s \t%s", method, uri)
 
 	contentType := c.ContentType()
 	if binding.MIMEJSON == contentType {
@@ -66,5 +68,10 @@ func Logger(c *gin.Context) {
 		}
 
 	}
+
+	defer func() {
+		useTime := time.Since(start).Milliseconds()
+		log.Printf("请求结束:%s \t%s\t耗时：%d毫秒", method, uri, useTime)
+	}()
 	c.Next()
 }
