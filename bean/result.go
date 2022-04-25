@@ -1,18 +1,19 @@
 package bean
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Result struct {
 	Ctx *gin.Context
 }
 
-type ResultCont struct {
-	Code string      `json:"Code"`
-	Msg  string      `json:"Msg"`
-	Data interface{} `json:"Data"`
+type ResultData struct {
+	Code string      `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
 }
 
 func NewResult(ctx *gin.Context) *Result {
@@ -23,7 +24,7 @@ func (r *Result) Success(data interface{}) {
 	if data == nil {
 		data = gin.H{}
 	}
-	res := ResultCont{}
+	res := ResultData{}
 	res.Code = "200"
 	res.Msg = "处理成功"
 	res.Data = data
@@ -31,7 +32,7 @@ func (r *Result) Success(data interface{}) {
 }
 
 func (r *Result) Error(code string, msg string) {
-	res := ResultCont{}
+	res := ResultData{}
 	res.Code = code
 	res.Msg = msg
 	res.Data = gin.H{}

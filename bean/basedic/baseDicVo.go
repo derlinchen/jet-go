@@ -3,8 +3,8 @@ package basedic
 import "jet/utils"
 
 type BaseDicVo struct {
-	Id   string
-	Name string
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
 func NewBaseDicVo() BaseDicVo {

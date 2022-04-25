@@ -29,7 +29,7 @@ func SaveBaseDic(ctx *gin.Context, tx *gorm.DB) error {
 
 func GetBaseDic(ctx *gin.Context) ([]*basedic.BaseDicVo, error) {
 	var result []*basedic.BaseDicVo
-	var id = ctx.Query("Id")
+	var id = ctx.Query("id")
 	err := db.Link.Where("id=?", id).Find(&result).Error
 	return result, err
 }
@@ -55,12 +55,12 @@ func SearchBaseDic(ctx *gin.Context) (basedic.PageInfo, error) {
 
 	link := db.Link
 
-	id := pageSearch.Item["Id"]
+	id := pageSearch.Item["id"]
 	if id != nil && id != "" {
 		link = link.Where("id = ?", id)
 	}
 
-	name := pageSearch.Item["Name"]
+	name := pageSearch.Item["name"]
 	if name != nil && name != "" {
 		link = link.Where("name = ?", name)
 	}
@@ -86,7 +86,7 @@ func SearchBaseDic(ctx *gin.Context) (basedic.PageInfo, error) {
 }
 
 func DeleteBaseDic(ctx *gin.Context, tx *gorm.DB) error {
-	id := ctx.Query("Id")
+	id := ctx.Query("id")
 	exec := tx.Delete(basedic.BaseDic{}, "id = ?", id)
 	if exec.Error != nil {
 		tx.Rollback()

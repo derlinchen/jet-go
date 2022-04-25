@@ -3,8 +3,8 @@ package basedic
 import "jet/utils"
 
 type BaseDic struct {
-	Id   string `json:"Id" db:"id"`
-	Name string `json:"Name" db:"name"`
+	Id   string `json:"id" db:"id"`
+	Name string `json:"name" db:"name"`
 }
 
 func NewBaseDic() BaseDic {
