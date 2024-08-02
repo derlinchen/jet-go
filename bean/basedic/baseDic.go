@@ -4,7 +4,7 @@ import "jet/utils"
 
 type BaseDic struct {
 	Id   string `json:"id" db:"id"`
-	Name string `json:"name" db:"name"`
+	Name string `json:"name" db:"name" binding:"required"`
 }
 
 func NewBaseDic() BaseDic {
